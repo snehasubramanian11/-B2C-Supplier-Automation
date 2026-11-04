@@ -1,0 +1,26 @@
+{
+  "validUser": {
+    "email": "supplier@gmail.com",
+    "password": "octopus123"
+  },
+  "invalidUser": {
+    "email": "wronguser@example.com",
+    "password": "WrongPassword123!"
+  },
+  "incorrectPassword": {
+    "email": "supplier@gmail.com",
+    "password": "IncorrectPassword123!"
+  },
+  "emptyEmail": {
+    "email": "",
+    "password": "octopus123"
+  },
+  "emptyPassword": {
+    "email": "supplier@gmail.com",
+    "password": ""
+  },
+  "emptyCredentials": {
+    "email": "",
+    "password": ""
+  }
+}

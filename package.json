@@ -1,0 +1,25 @@
+{
+  "name": "b2c",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+
+  "scripts": {
+  "cy:open": "cypress open",
+  "cy:run": "cypress run --browser chrome",
+  "report:custom": "node cypress/scripts/generate-custom-report.js",
+  "test:report": "npm run cy:run && npm run report:custom",
+  "report:open": "start cypress/reports/custom-report/index.html"
+},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "cypress": "^16.2.1",
+    "cypress-mochawesome-reporter": "^5.0.0",
+    "mochawesome": "^8.1.1",
+    "mochawesome-merge": "^5.1.1",
+    "mochawesome-report-generator": "^6.3.2"
+  }
+}
