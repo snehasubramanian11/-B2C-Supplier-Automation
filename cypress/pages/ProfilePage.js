@@ -1,4 +1,3 @@
-
 class ProfileMenuPage {
   elements = {
     profileName: 'supplier one',

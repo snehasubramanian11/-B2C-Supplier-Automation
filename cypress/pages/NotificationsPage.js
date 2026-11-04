@@ -1,4 +1,3 @@
-
 class NotificationsPage {
   notificationRows = 'tbody tr';
   loadingRows = 'tr.animate-pulse';

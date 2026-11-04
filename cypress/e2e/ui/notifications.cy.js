@@ -3,7 +3,6 @@ import NotificationsPage from '../../pages/NotificationsPage';
 describe('Supplier Notification Tests', () => {
   const loginPage = new LoginPage();
   const notificationsPage = new NotificationsPage();
-
   beforeEach(() => {
     loginPage.visit();
 
@@ -12,14 +11,12 @@ describe('Supplier Notification Tests', () => {
         data.validUser.email,
         data.validUser.password
       );
-
       cy.location('pathname', { timeout: 15000 })
         .should('include', '/supplier/orders');
 
       notificationsPage.clickNotifications();
     });
   });
-
   it('TC01 - should display the Notifications page', () => {
     notificationsPage.verifyNotificationsPage();
   });

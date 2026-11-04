@@ -1,24 +1,17 @@
-
 const fs = require('fs');
 const path = require('path');
 
 const projectRoot = path.resolve(__dirname, '../..');
-
-// Actual Mochawesome JSON file
 const jsonFile = path.join(
   projectRoot,
   'cypress/reports/mochawesome/index.json'
 );
-
-// Custom report output folder
 const outputFolder = path.join(
   projectRoot,
   'cypress/reports/custom-report'
 );
 
 const outputFile = path.join(outputFolder, 'index.html');
-
-// Project information
 const project = {
   name: 'B2C Supplier Portal',
   title: 'QA Test Execution Report',
@@ -30,8 +23,6 @@ const project = {
   language: 'JavaScript',
   testType: 'Functional Testing'
 };
-
-// Escape HTML special characters
 function escapeHtml(value) {
   return String(value ?? '').replace(/[&<>"']/g, char => ({
     '&': '&amp;',
@@ -41,8 +32,6 @@ function escapeHtml(value) {
     "'": '&#39;'
   })[char]);
 }
-
-// Extract individual tests from Mochawesome suites
 function extractTests(suites, parentTitles = []) {
 
   let tests = [];
@@ -75,42 +64,30 @@ function extractTests(suites, parentTitles = []) {
           test.err?.estack ||
           test.err?.stack ||
           '',
-
         context: test.context || ''
       });
 
     }
-
     tests = tests.concat(
       extractTests(suite.suites, currentTitles)
     );
 
   }
-
   return tests;
 }
-
-// Generate custom HTML report
 function generateReport() {
 
-  // Check JSON file
   if (!fs.existsSync(jsonFile)) {
     throw new Error(
       `JSON report not found: ${jsonFile}`
     );
   }
-
-  // Read JSON report
   const report = JSON.parse(
     fs.readFileSync(jsonFile, 'utf8')
   );
-
-  // Extract suites
   const suites = report.results?.flatMap(
     result => result.suites || []
   ) || report.suites || [];
-
-  // Extract all test cases
   const allTests = extractTests(suites);
 
   if (allTests.length === 0) {
@@ -118,8 +95,6 @@ function generateReport() {
       'No test cases found inside the JSON report.'
     );
   }
-
-  // Calculate test statistics
   const total = allTests.length;
 
   const passed = allTests.filter(
@@ -148,8 +123,6 @@ function generateReport() {
     : '0.0';
 
   const date = new Date().toLocaleString();
-
-  // Generate detailed test rows
   const rows = allTests.map((test, index) => {
 
     const status = test.state.toLowerCase();
@@ -558,7 +531,6 @@ small {
 
 </html>`;
 
- 
   fs.mkdirSync(outputFolder, {
     recursive: true
   });
@@ -568,8 +540,6 @@ small {
     html,
     'utf8'
   );
-
-
   console.log('-----------------------------------');
   console.log('CUSTOM HTML REPORT GENERATED');
   console.log('-----------------------------------');
@@ -594,5 +564,4 @@ try {
     error.message
   );
   process.exitCode = 1;
-
 }
