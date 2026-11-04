@@ -31,8 +31,6 @@ describe('B2c Supplier Notifications API', () => {
       failOnStatusCode: false
     }).then((response) => {
       expect(response.status).to.eq(200);
-
-
       cy.log(JSON.stringify(response.body));
       expect(response.body).to.exist;
     });

@@ -1,17 +1,13 @@
 const fs = require('fs');
 const path = require('path');
-
 const inputFile = path.join(
   __dirname,
   '../reports/merged/combined-report.json'
 );
-
 const outputFile = path.join(
   __dirname,
   '../reports/merged/B2C-QA-Automation-Report.html'
 );
-
-// Tester and project details
 const project = {
   name: 'B2C Supplier Portal',
   reportTitle: 'QA Automation Test Execution Report',
@@ -24,38 +20,25 @@ const project = {
   language: 'JavaScript',
   browser: 'Google Chrome'
 };
-
-// Read combined JSON
 const report = JSON.parse(
   fs.readFileSync(inputFile, 'utf8')
 );
-
 const stats = report.stats || {};
-
 const total = stats.tests || 0;
 const passed = stats.passes || 0;
 const failed = stats.failures || 0;
 const pending = stats.pending || 0;
-
 const passPercentage = total
   ? ((passed / total) * 100).toFixed(2)
   : '0.00';
-
 const executionDate = stats.end
   ? new Date(stats.end).toLocaleString()
   : new Date().toLocaleString();
-
-// Collect test details
 const testCases = [];
-
 function collectTests(suites) {
-
   suites.forEach(suite => {
-
     if (suite.tests) {
-
       suite.tests.forEach(test => {
-
         testCases.push({
           title: test.title,
           fullTitle: test.fullTitle,
@@ -63,26 +46,18 @@ function collectTests(suites) {
           duration: test.duration,
           error: test.err?.message || ''
         });
-
       });
-
     }
-
     if (suite.suites) {
       collectTests(suite.suites);
     }
-
   });
-
 }
-
 (report.results || []).forEach(result => {
 
   collectTests(result.suites || []);
 
 });
-
-// Escape special HTML characters
 function escapeHTML(value) {
 
   return String(value || '').replace(
@@ -95,10 +70,7 @@ function escapeHTML(value) {
       "'": '&#39;'
     })[char]
   );
-
 }
-
-// Generate test rows
 const testRows = testCases.map((test, index) => {
 
   const status = test.state || 'pending';
@@ -116,13 +88,10 @@ const testRows = testCases.map((test, index) => {
   `;
 
 }).join('');
-
-// Generate HTML
 const html = `
 <!DOCTYPE html>
 <html>
 <head>
-
   <meta charset="UTF-8">
 
   <title>${escapeHTML(project.reportTitle)}</title>
@@ -390,8 +359,6 @@ const html = `
 </body>
 </html>
 `;
-
-// Save customized report
 fs.writeFileSync(outputFile, html);
 
 console.log('Customized QA report generated successfully!');

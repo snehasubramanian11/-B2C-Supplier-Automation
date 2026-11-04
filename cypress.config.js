@@ -1,13 +1,8 @@
-
 const { defineConfig } = require('cypress');
-
 module.exports = defineConfig({
-
   video: true,
   screenshotOnRunFailure: true,
-
   reporter: 'cypress-mochawesome-reporter',
-
   reporterOptions: {
     reportDir: 'cypress/reports/mochawesome',
     reportPageTitle: 'B2C Supplier QA Test Execution Report',
@@ -41,5 +36,4 @@ module.exports = defineConfig({
       return config;
     }
   }
-
 });
