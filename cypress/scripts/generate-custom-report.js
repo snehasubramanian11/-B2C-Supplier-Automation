@@ -596,7 +596,6 @@ try {
     'Report generation failed:',
     error.message
   );
-
   process.exitCode = 1;
 
 }
