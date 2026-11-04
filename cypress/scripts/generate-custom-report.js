@@ -558,19 +558,18 @@ small {
 
 </html>`;
 
-  // Create output folder
+ 
   fs.mkdirSync(outputFolder, {
     recursive: true
   });
 
-  // Generate HTML file
   fs.writeFileSync(
     outputFile,
     html,
     'utf8'
   );
 
-  // Console confirmation
+
   console.log('-----------------------------------');
   console.log('CUSTOM HTML REPORT GENERATED');
   console.log('-----------------------------------');
@@ -584,8 +583,6 @@ small {
   console.log(`Report: ${outputFile}`);
 
 }
-
-// Execute report generator
 try {
 
   generateReport();
