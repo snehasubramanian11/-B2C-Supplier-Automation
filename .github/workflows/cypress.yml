@@ -1,8 +1,10 @@
 name: Cypress Automation Tests
+
 on:
   push:
     branches:
       - "**"
+
 permissions:
   contents: read
 
@@ -19,14 +21,24 @@ jobs:
         uses: cypress-io/github-action@v7
         with:
           browser: chrome
-      - name: Upload Cypress Reports and Screenshots
+          command: npm run cy:run
+
+      - name: Merge Mochawesome Reports
+        if: always()
+        run: npm run report:merge
+
+      - name: Generate HTML Report
+        if: always()
+        run: npm run report:html
+      - name: Upload Cypress Reports
         if: always()
         uses: actions/upload-artifact@v6
         with:
-          name: cypress-test-results
+          name: cypress-test-reports
           path: |
-            cypress/reports/
-            cypress/screenshots/
-            cypress/videos/
-          if-no-files-found: ignore
+            cypress/reports/custom-report/index.html
+            cypress/reports/mochawesome/index.html
+            cypress/reports/mochawesome/*.json
+            cypress/reports/merged/combined-report.json
+          if-no-files-found: warn
           retention-days: 7
