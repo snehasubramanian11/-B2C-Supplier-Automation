@@ -2,6 +2,7 @@ class LoginPage {
   emailInput = 'input[type="email"]';
   passwordInput = 'input[type="password"]';
   loginButton = 'button[type="submit"]';
+
   visit() {
     cy.visit('/login/supplier');
   }
@@ -13,6 +14,7 @@ class LoginPage {
       cy.get(this.emailInput).type(email);
     }
   }
+
   enterPassword(password) {
     cy.get(this.passwordInput).clear();
 
@@ -20,14 +22,17 @@ class LoginPage {
       cy.get(this.passwordInput).type(password);
     }
   }
+
   clickLogin() {
     cy.get(this.loginButton).click();
   }
+
   login(email, password) {
     this.enterEmail(email);
     this.enterPassword(password);
     this.clickLogin();
   }
+
   verifySuccessfulLogin() {
     cy.location('pathname', { timeout: 15000 })
       .should('include', '/supplier/orders');
@@ -38,4 +43,5 @@ class LoginPage {
       .should('include', '/login/supplier');
   }
 }
+
 export default LoginPage;

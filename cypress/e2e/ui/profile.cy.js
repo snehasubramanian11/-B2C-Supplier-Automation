@@ -6,7 +6,7 @@ describe('Supplier Profile Menu', () => {
   const profileMenuPage = new ProfileMenuPage();
 
   beforeEach(() => {
-    cy.visit('/login/supplier');
+    loginPage.visit();
 
     cy.fixture('supplierLogin').then((data) => {
       loginPage.login(
@@ -14,23 +14,23 @@ describe('Supplier Profile Menu', () => {
         data.validUser.password
       );
 
-      cy.url().should('include', '/supplier/orders');
+      loginPage.verifySuccessfulLogin();
     });
   });
 
- it('TC01 - Should verify profile menu details', () => {
-  profileMenuPage.verifyProfileMenuVisible();
-});
+  it('TC01 - Should verify profile menu details', () => {
+    profileMenuPage.verifyProfileMenuVisible();
+  });
 
-it('TC02 - Should click Change Password', () => {
-  profileMenuPage.openProfileMenu();
-  profileMenuPage.clickChangePassword();
-});
+  it('TC02 - Should click Change Password', () => {
+    profileMenuPage.openProfileMenu();
+    profileMenuPage.clickChangePassword();
+  });
 
-it('TC03 - Should sign out successfully', () => {
-  profileMenuPage.openProfileMenu();
-  profileMenuPage.clickSignout();
+  it('TC03 - Should sign out successfully', () => {
+    profileMenuPage.openProfileMenu();
+    profileMenuPage.clickSignout();
 
-  cy.location('pathname').should('include', '/login');
-});
+    cy.location('pathname').should('include', '/login');
+  });
 });
