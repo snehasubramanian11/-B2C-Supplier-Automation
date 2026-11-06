@@ -1,0 +1,50 @@
+version: 2.1
+
+jobs:
+  cypress-tests:
+    docker:
+      - image: cypress/included:16.2.1
+
+    working_directory: ~/B2C
+
+    environment:
+      CYPRESS_BASE_URL: https://octopus-package-dashboard.vercel.app
+
+    steps:
+      - checkout
+
+      - run:
+          name: Install Dependencies
+          command: npm ci
+
+      - run:
+          name: Create Reports Directory
+          command: mkdir -p cypress/reports
+
+      - run:
+          name: Execute Cypress Tests
+          command: npx cypress run
+
+      - when:
+          condition: always
+          steps:
+            - run:
+                name: Generate Custom HTML Report
+                command: npm run test:report
+
+            - store_artifacts:
+                path: cypress/reports
+                destination: automation-reports
+
+            - store_artifacts:
+                path: cypress/screenshots
+                destination: screenshots
+
+            - store_artifacts:
+                path: cypress/videos
+                destination: videos
+
+workflows:
+  b2c-automation:
+    jobs:
+      - cypress-tests
