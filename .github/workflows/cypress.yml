@@ -27,9 +27,9 @@ jobs:
         if: always()
         run: npm run report:custom
 
-      - name: Generate HTML Report
+      - name: Generate custom HTML Report
         if: always()
-        run: npm run report:html
+        run: npm run report:custom
       - name: Upload Cypress Reports
         if: always()
         uses: actions/upload-artifact@v6
