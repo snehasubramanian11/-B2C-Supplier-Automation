@@ -1,0 +1,11 @@
+
+services:
+  cypress:
+    build: .
+    image: b2c-cypress
+    container_name: b2c-cypress-test
+
+    volumes:
+      - ./cypress/reports:/app/cypress/reports
+      - ./cypress/screenshots:/app/cypress/screenshots
+      - ./cypress/videos:/app/cypress/videos

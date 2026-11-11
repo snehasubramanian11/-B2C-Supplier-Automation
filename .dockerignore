@@ -1,0 +1,9 @@
+node_modules
+.git
+.github
+cypress/videos
+cypress/screenshots
+cypress/reports
+.env
+.env.*
+*.log
